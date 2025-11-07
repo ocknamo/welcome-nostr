@@ -35,7 +35,7 @@ export default defineUserConfig({
     }),
     seoPlugin({
       hostname: 'ocknamo.github.io',
-      fallBackImage: 'images/welcome_banner.png',
+      fallBackImage: 'https://ocknamo.github.io/welcome-nostr/ogp-card.jpg', // fix me
     })
   ],
   theme: defaultTheme({
