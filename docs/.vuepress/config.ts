@@ -8,12 +8,12 @@ import footnote from "markdown-it-footnote";
 import toc from "markdown-it-table-of-contents";
 
 export default defineUserConfig({
+  base: '/welcome-nostr/',
   bundler: viteBundler({
     viteOptions: {
       server: {
         allowedHosts: ["ocknamo.github.io"]
-      },
-      base: '/welcome-nostr/'
+      }
     }
   }),
   lang: "ja-JP",
