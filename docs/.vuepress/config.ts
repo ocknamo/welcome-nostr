@@ -35,7 +35,7 @@ export default defineUserConfig({
     }),
     seoPlugin({
       hostname: 'ocknamo.github.io',
-      fallBackImage: '/docs/images/welcome_banner.png',
+      fallBackImage: 'images/welcome_banner.png',
     })
   ],
   theme: defaultTheme({
