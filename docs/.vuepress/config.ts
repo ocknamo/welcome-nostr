@@ -12,7 +12,8 @@ export default defineUserConfig({
     viteOptions: {
       server: {
         allowedHosts: ["ocknamo.github.io"]
-      }
+      },
+      base: '/welcome-nostr/'
     }
   }),
   lang: "ja-JP",
