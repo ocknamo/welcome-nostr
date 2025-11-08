@@ -49,7 +49,7 @@ export const ogpGeneratorPlugin = () => ({
          }
       )
       const png = await sharp(Buffer.from(svg)).png().toBuffer()
-      fs.writeFileSync(`${outDir}/${page.slug}.png`, png)
+      fs.writeFileSync(`${outDir}/${page.slug || 'no-title'}.png`, png)
     }
   },
 })
