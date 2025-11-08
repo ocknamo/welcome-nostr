@@ -8,7 +8,7 @@ export const ogpGeneratorPlugin = () => ({
   name: 'ogp-generator',
   async onGenerated(app) {
     const pages = app.pages
-    const outDir = app.dir.dest('ogp')
+    const outDir = app.dir.dest()
     fs.mkdirSync(outDir, { recursive: true })
 
     // fontデータの読み取り

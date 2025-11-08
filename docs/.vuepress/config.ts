@@ -41,7 +41,7 @@ export default defineUserConfig({
       ogp: (page, app) => {
         const title = `${page["og:title"]}/${page["og:site_name"]}`;
         const slug = app.slug;
-        return ({ ...page, "og:image": `https://ocknamo.github.io/welcome-nostr/ogp/${slug}.png`, "og:title": title })
+        return ({ ...page, "og:image": `https://ocknamo.github.io/welcome-nostr/${slug}.png`, "og:title": title })
       }
       })
   ],
