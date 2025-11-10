@@ -37,11 +37,12 @@ export default defineUserConfig({
     }),
     seoPlugin({
       hostname: 'ocknamo.github.io',
-      fallBackImage: "https://ocknamo.github.io/welcome-nostr/ogp-card.jpg", // fix me
+      fallBackImage: "https://ocknamo.github.io/welcome-nostr/ogp-default.jpg", // fix me
       ogp: (page, app) => {
         const title = `${page["og:title"]}/${page["og:site_name"]}`;
-        const slug = app.slug ?? 'no-title';
-        return ({ ...page, "og:image": `https://ocknamo.github.io/welcome-nostr/ogp/${slug}.png`, "og:title": title })
+        const slug = app.slug;
+        const ogpUrl = slug ? `https://ocknamo.github.io/welcome-nostr/ogp/${slug}.png` : 'https://ocknamo.github.io/welcome-nostr/ogp-default.jpg';
+        return ({ ...page, "og:image": ogpUrl, "og:title": title })
       }
       })
   ],
