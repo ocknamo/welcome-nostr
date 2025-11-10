@@ -8,6 +8,8 @@ import footnote from "markdown-it-footnote";
 import toc from "markdown-it-table-of-contents";
 import { ogpGeneratorPlugin } from "./plugins/gemerate-ogp/generate-ogp";
 
+const defaultOgp = "https://ocknamo.github.io/welcome-nostr/ogp-default.jpg" // fix me
+
 export default defineUserConfig({
   base: '/welcome-nostr/',
   bundler: viteBundler({
@@ -37,11 +39,11 @@ export default defineUserConfig({
     }),
     seoPlugin({
       hostname: 'ocknamo.github.io',
-      fallBackImage: "https://ocknamo.github.io/welcome-nostr/ogp-default.jpg", // fix me
+      fallBackImage: defaultOgp,
       ogp: (page, app) => {
         const title = `${page["og:title"]}/${page["og:site_name"]}`;
         const slug = app.slug;
-        const ogpUrl = slug ? `https://ocknamo.github.io/welcome-nostr/ogp/${slug}.png` : 'https://ocknamo.github.io/welcome-nostr/ogp-default.jpg';
+        const ogpUrl = slug && slug !== 'index' ? `https://ocknamo.github.io/welcome-nostr/ogp/${slug}.png` : defaultOgp;
         return ({ ...page, "og:image": ogpUrl, "og:title": title })
       }
       })
