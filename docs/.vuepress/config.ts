@@ -6,7 +6,7 @@ import attrs from "markdown-it-attrs";
 import { gitPlugin } from "@vuepress/plugin-git";
 import footnote from "markdown-it-footnote";
 import toc from "markdown-it-table-of-contents";
-import { ogpGeneratorPlugin } from "./plugins/generate-ogp";
+import { ogpGeneratorPlugin } from "./plugins/gemerate-ogp/generate-ogp";
 
 export default defineUserConfig({
   base: '/welcome-nostr/',
@@ -40,7 +40,7 @@ export default defineUserConfig({
       fallBackImage: "https://ocknamo.github.io/welcome-nostr/ogp-card.jpg", // fix me
       ogp: (page, app) => {
         const title = `${page["og:title"]}/${page["og:site_name"]}`;
-        const slug = app.slug;
+        const slug = app.slug ?? 'no-title';
         return ({ ...page, "og:image": `https://ocknamo.github.io/welcome-nostr/${slug}.png`, "og:title": title })
       }
       })

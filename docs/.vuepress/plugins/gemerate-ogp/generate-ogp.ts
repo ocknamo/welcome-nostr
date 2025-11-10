@@ -12,12 +12,10 @@ export const ogpGeneratorPlugin = () => ({
     fs.mkdirSync(outDir, { recursive: true })
 
     // fontデータの読み取り
-    const fontData = fs.readFileSync("docs/.vuepress/plugins/font/Zen_Kaku_Gothic_New/ZenKakuGothicNew-Regular.ttf");
+    const fontData = fs.readFileSync("docs/.vuepress/plugins/gemerate-ogp/font/Zen_Kaku_Gothic_New/ZenKakuGothicNew-Bold.ttf");
     
     for (const page of pages) {
       const title = page.title || 'No Title'
-      console.log('page');
-      console.log(page);
       // // satori-htmlで文字列をVNodeに変換
       // const vnode = html(`<div>${title}</div>`);
       const svg = await satori(
