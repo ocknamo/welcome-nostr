@@ -12,13 +12,7 @@ const defaultOgp = "https://ocknamo.github.io/welcome-nostr/ogp-default.jpg" // 
 
 export default defineUserConfig({
   base: '/welcome-nostr/',
-  bundler: viteBundler({
-    viteOptions: {
-      server: {
-        allowedHosts: ["ocknamo.github.io"]
-      }
-    }
-  }),
+  bundler: viteBundler(),
   lang: "ja-JP",
   title: "Welcome to Nostr! ～ Nostrをはじめよう！ ～",
   // Ban README.md. Use index.md instead.
