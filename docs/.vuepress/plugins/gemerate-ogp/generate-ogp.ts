@@ -1,8 +1,8 @@
-import fs from 'fs'
-import satori from 'satori'
-import { html } from "satori-html";
+import fs from 'node:fs'
+import path from 'node:path';
 import sharp from 'sharp'
 import { App } from 'vuepress'
+import Piscina from 'piscina';
 
 export const ogpGeneratorPlugin = () => ({
   name: 'ogp-generator',
@@ -11,40 +11,18 @@ export const ogpGeneratorPlugin = () => ({
     const outDir = app.dir.dest("ogp")
     fs.mkdirSync(outDir, { recursive: true })
 
-    // fontデータの読み取り
-    const fontData = fs.readFileSync("docs/.vuepress/plugins/gemerate-ogp/font/Zen_Kaku_Gothic_New/ZenKakuGothicNew-Bold.ttf");
+    // satoriを用いたSVG画像生成時間の最適化のため
+    const pool = new Piscina({
+      filename: path.resolve('docs/.vuepress/plugins/gemerate-ogp/worker.js'),
+      maxThreads: 2 // CPUコア数に合わせて調整
+    });
 
-    // 画像ファイルの読み込み
-    const imageBuffer = fs.readFileSync("docs/.vuepress/plugins/gemerate-ogp/ogp-background.jpg");
-    // 画像ファイルをbase64形式にエンコード
-    const imageBase64 = Buffer.from(imageBuffer).toString("base64");
-    const imageData = `data:image/jpeg;base64,${imageBase64}`;
-
-    for (const page of pages) {
-      const title = page.title || 'No Title'
-      // satori-htmlで文字列をVNodeに変換
-      const vnode = html(`
- <div style="display:flex; justify-content:center; align-items:center; background-image: url(${imageData}); width:1200px; height:630px" >
-  <div style="max-width: 780px; width: auto; height:340;font-size:64px; display:flex;">${title}</div>
- </div>
-`);
-
-      const svg = await satori(
-        vnode,
-        {
-          width: 1200, height: 630,
-          fonts: [
-            {
-              name: 'Zen Kaku Gothic New',
-              data: fontData,
-              style: 'normal',
-            },
-          ],
-          embedFont: true,
-        }
-      )
+    await Promise.all(pages.map(async (page) => {
+      const title = page.title || 'ようこそ Nostr へ！'
+      const svg = await pool.run({ title });
       const jpg = await sharp(Buffer.from(svg)).jpeg().toBuffer()
-      fs.writeFileSync(`${outDir}/${page.slug || 'no-title'}.jpg`, jpg)
-    }
+      const outPuth = `${outDir}/${page.slug || 'no-title'}.jpg`
+      fs.writeFileSync(outPuth, jpg);
+    }));
   },
 })
